@@ -1,3 +1,4 @@
+from django.contrib import auth
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.models import Snippet
@@ -68,3 +69,24 @@ def snippet_edit(request, id):
         if form.is_valid():
             form.save()
             return redirect('snippets-list')
+
+
+def login_page(request):
+   if request.method == 'POST':
+       username = request.POST.get("username")
+       password = request.POST.get("password")
+       # print("username =", username)
+       # print("password =", password)
+       user = auth.authenticate(request, username=username, password=password)
+       if user is not None:
+           auth.login(request, user)
+       else:
+           # Return error message
+           context = {}
+           context["error"] = "Не верный логин или пароль"
+           return render(request, 'index.html', context)
+   return redirect('home')
+
+def logout(request):
+    auth.logout(request)
+    return redirect('home')

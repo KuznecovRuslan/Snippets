@@ -29,6 +29,11 @@
         code {
             font-size: 80%;
         }
+
+
+
+
+
     </style>
 </head>
 
@@ -47,13 +52,30 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="form-inline"><a class="btn btn-outline-secondary" href="{% url 'snippets-add' %}">Добавить сниппет</a></li>
+                    <li class="form-inline"><a class="btn btn-outline-secondary" href="{% url 'snippets-add' %}">Добавить
+                        сниппет</a></li>
                     <li class="form-inline"><a class="btn btn-outline-info" href="{% url 'snippets-list' %}">Посмотреть
                         сниппеты</a></li>
                 </ul>
             </div>
+            <div class="col-4" style="color:white">
+                {% if request.user.is_authenticated %}
+                Добро пожаловать, {{request.user.username }}
+                <a href="{%url 'logout' %}">Выйти</a>
+                {% else %}
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <label for="username">username: </label>
+                    <input name="username" type="text">
+                    <label for="password">password: </label>
+                    <input name="password" type="password">
+                    <button type="submit">login</button>
+                </form>
+                {% endif %}
+            </div>
         </div>
     </nav>
+
 </header>
 
 <!-- Begin page content -->
@@ -69,39 +91,39 @@
         {% block content %}
         <h1>...</h1>
         {% endblock %}
-<!--        <div class="row">-->
-<!--            <div class="col">-->
-<!--                <p>Добро пожаловать, уважаемый пользователь!-->
-<!--                <p>На этом сайте ты сможешь сохранить свои заготовки кода на различных языках программирования<br>-->
-<!--                    А также делиться ими с другими пользователями...-->
-<!--                <hr>-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="row">-->
+        <!--            <div class="col">-->
+        <!--                <p>Добро пожаловать, уважаемый пользователь!-->
+        <!--                <p>На этом сайте ты сможешь сохранить свои заготовки кода на различных языках программирования<br>-->
+        <!--                    А также делиться ими с другими пользователями...-->
+        <!--                <hr>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
-<!--        <div class="row mt-3">-->
-<!--            <div class="col-4 offset-4">-->
-<!--                <a href="{% url 'snippets-add' %}" class="btn btn-secondary btn-block">Добавить сниппет</a>-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="row mt-3">-->
+        <!--            <div class="col-4 offset-4">-->
+        <!--                <a href="{% url 'snippets-add' %}" class="btn btn-secondary btn-block">Добавить сниппет</a>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
-<!--        <div class="row mt-3">-->
-<!--            <div class="col">-->
-<!--                <hr>-->
-<!--                <h4>Найти сниппет по номеру</h4>-->
-<!--                <form action='' id="view_snippet_form">-->
-<!--                    <div class="form-group row">-->
-<!--                        <label for="snippet_id" class="col-sm-2 col-form-label col-form-label-lg">Номер:</label>-->
-<!--                        <div class="col-sm-8">-->
-<!--                            <input type="number" class="form-control form-control-lg" id="snippet_id"-->
-<!--                                   placeholder="введите число">-->
-<!--                        </div>-->
-<!--                        <div class="col-sm-2">-->
-<!--                            <input type="submit" class="form-control form-control-lg btn btn-info" value="Найти">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="row mt-3">-->
+        <!--            <div class="col">-->
+        <!--                <hr>-->
+        <!--                <h4>Найти сниппет по номеру</h4>-->
+        <!--                <form action='' id="view_snippet_form">-->
+        <!--                    <div class="form-group row">-->
+        <!--                        <label for="snippet_id" class="col-sm-2 col-form-label col-form-label-lg">Номер:</label>-->
+        <!--                        <div class="col-sm-8">-->
+        <!--                            <input type="number" class="form-control form-control-lg" id="snippet_id"-->
+        <!--                                   placeholder="введите число">-->
+        <!--                        </div>-->
+        <!--                        <div class="col-sm-2">-->
+        <!--                            <input type="submit" class="form-control form-control-lg btn btn-info" value="Найти">-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </form>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </main>
 
